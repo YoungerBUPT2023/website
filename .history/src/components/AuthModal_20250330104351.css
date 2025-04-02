@@ -1,0 +1,143 @@
+.auth-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1100;
+  animation: fadeIn 0.3s ease;
+}
+
+.auth-modal {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  animation: slideIn 0.3s ease;
+}
+
+.auth-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+
+.auth-tabs {
+  display: flex;
+  flex: 1;
+}
+
+.auth-tab {
+  flex: 1;
+  text-align: center;
+  padding: 15px 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.auth-tab.active {
+  color: #FF4B91;
+  border-bottom: 2px solid #FF4B91;
+}
+
+.auth-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  padding: 10px 15px;
+  transition: color 0.3s ease;
+}
+
+.auth-close-btn:hover {
+  color: #FF4B91;
+}
+
+.auth-modal-body {
+  padding: 20px;
+}
+
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.auth-form-group {
+  margin-bottom: 15px;
+}
+
+.auth-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #666;
+}
+
+.auth-form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.auth-form-group input:focus {
+  border-color: #FF4B91;
+  outline: none;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #FF4B91;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.auth-btn:hover {
+  background-color: #FF7676;
+}
+
+.auth-message {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.auth-message.success {
+  background-color: #f6ffed;
+  border: 1px solid #b7eb8f;
+  color: #52c41a;
+}
+
+.auth-message.error {
+  background-color: #fff2f0;
+  border: 1px solid #ffccc7;
+  color: #ff4d4f;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+} 

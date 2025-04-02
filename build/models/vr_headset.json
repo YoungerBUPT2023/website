@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "version": 4.5,
+    "type": "Object",
+    "generator": "Object3D.toJSON"
+  },
+  "geometries": [
+    {
+      "uuid": "sphere-geo",
+      "type": "SphereGeometry",
+      "radius": 1,
+      "widthSegments": 32,
+      "heightSegments": 16
+    }
+  ],
+  "materials": [
+    {
+      "uuid": "default-material",
+      "type": "MeshStandardMaterial",
+      "color": 16777215,
+      "roughness": 0.5,
+      "metalness": 0.5,
+      "emissive": 11184810
+    }
+  ],
+  "object": {
+    "uuid": "vr_headset",
+    "type": "Mesh",
+    "name": "vr_headset",
+    "geometry": "sphere-geo",
+    "material": "default-material",
+    "position": [
+      0,
+      0,
+      0
+    ],
+    "rotation": [
+      0,
+      0,
+      0
+    ],
+    "scale": [
+      1,
+      1,
+      1
+    ]
+  }
+}

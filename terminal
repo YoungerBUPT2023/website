@@ -1,0 +1,3 @@
+npx create-react-app space-ground-lab
+cd space-ground-lab
+npm install react-router-dom three @react-three/fiber @react-three/drei axios 

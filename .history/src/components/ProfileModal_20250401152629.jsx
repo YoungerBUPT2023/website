@@ -1,0 +1,467 @@
+import React, { useState, useEffect, useRef } from 'react';
+import './ProfileModal.css';
+import { toast } from 'react-toastify';
+import { FiUser, FiUserPlus, FiEdit, FiSettings, FiLogOut, FiX, FiHeart, FiMessageSquare, FiUpload, FiPlus } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+
+const ProfileModal = ({ isOpen, onClose, username }) => {
+  const [user, setUser] = useState({
+    username: '',
+    avatar: '',
+    bio: '',
+    fullName: '',
+    email: '',
+    gender: '',
+    dateJoined: '',
+    followers: [],
+    following: []
+  });
+  const [editMode, setEditMode] = useState(false);
+  const [tempUser, setTempUser] = useState({});
+  const [showSettings, setShowSettings] = useState(false);
+  const [avatarClicked, setAvatarClicked] = useState(false);
+  const [experiments, setExperiments] = useState([]);
+  const [showExperimentForm, setShowExperimentForm] = useState(false);
+  const [newExperiment, setNewExperiment] = useState({ name: '', description: '' });
+  const modalRef = useRef(null);
+  const settingsRef = useRef(null);
+  const [isLoadingUser, setIsLoadingUser] = useState(false);
+  const [userProjects, setUserProjects] = useState([]);
+  const [activeTab, setActiveTab] = useState('profile');
+  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isOpen && username) {
+      loadUserData();
+      loadUserProjects();
+    }
+  }, [isOpen, username]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (settingsRef.current && !settingsRef.current.contains(event.target) && !event.target.closest('.profile-settings-button')) {
+        setShowSettings(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // 加载用户数据
+  const loadUserData = () => {
+    setIsLoadingUser(true);
+    // 从localStorage获取用户数据模拟API请求
+    try {
+      const userList = JSON.parse(localStorage.getItem('users')) || [];
+      const currentUser = userList.find(u => u.username === username);
+      
+      if (currentUser) {
+        setUser({
+          username: currentUser.username || '',
+          avatar: currentUser.avatar || 'https://gravatar.com/avatar/0?d=mp',
+          bio: currentUser.bio || '这个人很懒，还没有填写个人简介',
+          fullName: currentUser.fullName || '',
+          email: currentUser.email || '',
+          gender: currentUser.gender || '',
+          dateJoined: currentUser.dateJoined || new Date().toISOString().split('T')[0],
+          followers: currentUser.followers || [],
+          following: currentUser.following || []
+        });
+        setTempUser({
+          username: currentUser.username || '',
+          avatar: currentUser.avatar || 'https://gravatar.com/avatar/0?d=mp',
+          bio: currentUser.bio || '这个人很懒，还没有填写个人简介',
+          fullName: currentUser.fullName || '',
+          email: currentUser.email || '',
+          gender: currentUser.gender || ''
+        });
+        
+        // 加载实验数据
+        setExperiments(currentUser.experiments || []);
+      }
+    } catch (error) {
+      console.error('Failed to load user data:', error);
+      toast.error('加载用户数据失败');
+    } finally {
+      setIsLoadingUser(false);
+    }
+  };
+
+  // 加载用户发布的作品
+  const loadUserProjects = () => {
+    try {
+      // 从localStorage获取项目数据
+      const allProjects = JSON.parse(localStorage.getItem('projects')) || [];
+      // 筛选当前用户发布的项目
+      const userProjs = allProjects.filter(project => project.author === username);
+      setUserProjects(userProjs);
+    } catch (error) {
+      console.error('Failed to load user projects:', error);
+      toast.error('加载用户作品失败');
+    }
+  };
+
+  // 导航到项目详情页
+  const navigateToProject = (projectId) => {
+    onClose();
+    navigate(`/project/${projectId}`);
+  };
+
+  // 处理点击模态框外部区域
+  const handleOutsideClick = (e) => {
+    if (e.target.className === 'profile-modal-overlay') {
+      onClose();
+    }
+  };
+
+  // 处理头像点击
+  const handleAvatarClick = () => {
+    if (!editMode) {
+      setAvatarClicked(true);
+    }
+  };
+
+  // 关闭大头像预览
+  const handleLargeAvatarClose = (e) => {
+    e.stopPropagation();
+    setAvatarClicked(false);
+  };
+
+  // 编辑模式
+  const startEdit = () => {
+    setEditMode(true);
+    setShowSettings(false);
+  };
+
+  // 取消编辑
+  const cancelEdit = () => {
+    setTempUser({
+      username: user.username,
+      avatar: user.avatar,
+      bio: user.bio,
+      fullName: user.fullName,
+      email: user.email,
+      gender: user.gender
+    });
+    setEditMode(false);
+  };
+
+  // 保存编辑
+  const saveChanges = () => {
+    try {
+      const userList = JSON.parse(localStorage.getItem('users')) || [];
+      const updatedUsers = userList.map(u => {
+        if (u.username === username) {
+          return {
+            ...u,
+            bio: tempUser.bio,
+            fullName: tempUser.fullName,
+            email: tempUser.email,
+            gender: tempUser.gender
+          };
+        }
+        return u;
+      });
+      
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      
+      setUser({
+        ...user,
+        bio: tempUser.bio,
+        fullName: tempUser.fullName,
+        email: tempUser.email,
+        gender: tempUser.gender
+      });
+      
+      setEditMode(false);
+      toast.success('个人资料已更新');
+    } catch (error) {
+      console.error('保存用户数据失败:', error);
+      toast.error('保存用户数据失败');
+    }
+  };
+
+  // 添加实验
+  const addExperiment = () => {
+    if (!newExperiment.name || !newExperiment.description) {
+      toast.warning('请填写实验名称和描述');
+      return;
+    }
+    
+    try {
+      const userList = JSON.parse(localStorage.getItem('users')) || [];
+      const updatedUsers = userList.map(u => {
+        if (u.username === username) {
+          const updatedExperiments = [...(u.experiments || []), newExperiment];
+          return { ...u, experiments: updatedExperiments };
+        }
+        return u;
+      });
+      
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      setExperiments([...experiments, newExperiment]);
+      setNewExperiment({ name: '', description: '' });
+      setShowExperimentForm(false);
+      toast.success('实验添加成功');
+    } catch (error) {
+      console.error('添加实验失败:', error);
+      toast.error('添加实验失败');
+    }
+  };
+
+  // 删除实验
+  const deleteExperiment = (index) => {
+    try {
+      const userList = JSON.parse(localStorage.getItem('users')) || [];
+      const updatedUsers = userList.map(u => {
+        if (u.username === username) {
+          const updatedExperiments = [...u.experiments];
+          updatedExperiments.splice(index, 1);
+          return { ...u, experiments: updatedExperiments };
+        }
+        return u;
+      });
+      
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      const updatedExperiments = [...experiments];
+      updatedExperiments.splice(index, 1);
+      setExperiments(updatedExperiments);
+      toast.success('实验删除成功');
+    } catch (error) {
+      console.error('删除实验失败:', error);
+      toast.error('删除实验失败');
+    }
+  };
+
+  // 切换设置菜单
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
+  // 登出
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+    toast.info('已退出登录');
+    onClose();
+    navigate('/login');
+  };
+
+  return isOpen ? (
+    <div className="profile-modal-overlay" onClick={handleOutsideClick}>
+      <div className="profile-modal-content" ref={modalRef}>
+        <button className="profile-close-button" onClick={onClose}>
+          <FiX />
+        </button>
+
+        {isLoadingUser ? (
+          <div className="loading-spinner">加载中...</div>
+        ) : (
+          <>
+            <div className="profile-header">
+              <div className="profile-avatar-container" onClick={handleAvatarClick}>
+                <img src={user.avatar} alt={user.username} className="profile-avatar" />
+                {editMode && <div className="avatar-edit-overlay"><FiEdit /><span>更换头像</span></div>}
+              </div>
+              <div className="profile-user-info">
+                <h2 className="profile-name">{user.fullName || user.username}</h2>
+                <p className="profile-username">@{user.username}</p>
+                <div className="profile-stats">
+                  <div className="stat-item">
+                    <span className="stat-count">{user.followers.length}</span>
+                    <span className="stat-label">粉丝</span>
+                  </div>
+                  <div className="stat-item">
+                    <span className="stat-count">{user.following.length}</span>
+                    <span className="stat-label">关注</span>
+                  </div>
+                </div>
+              </div>
+              <div className="profile-actions">
+                {!editMode ? (
+                  <button className="profile-settings-button" onClick={toggleSettings}>
+                    <FiSettings />
+                  </button>
+                ) : (
+                  <div className="edit-actions">
+                    <button className="profile-cancel-button" onClick={cancelEdit}>取消</button>
+                    <button className="profile-save-button" onClick={saveChanges}>保存</button>
+                  </div>
+                )}
+                {showSettings && (
+                  <div className="profile-settings-menu" ref={settingsRef}>
+                    <button className="settings-option" onClick={startEdit}>
+                      <FiEdit /> 编辑资料
+                    </button>
+                    <button className="settings-option logout-option" onClick={handleLogout}>
+                      <FiLogOut /> 退出登录
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="profile-tabs">
+              <button 
+                className={`tab-button ${activeTab === 'profile' ? 'active' : ''}`}
+                onClick={() => setActiveTab('profile')}
+              >
+                <FiUser /> 个人资料
+              </button>
+              <button 
+                className={`tab-button ${activeTab === 'experiments' ? 'active' : ''}`}
+                onClick={() => setActiveTab('experiments')}
+              >
+                <FiUserPlus /> 我的实验
+              </button>
+            </div>
+
+            {activeTab === 'profile' && (
+              <div className="profile-details">
+                {editMode ? (
+                  <form onSubmit={(e) => e.preventDefault()}>
+                    <div className="profile-field">
+                      <h3>个人简介</h3>
+                      <textarea 
+                        className="profile-bio-input"
+                        value={tempUser.bio}
+                        onChange={(e) => setTempUser({...tempUser, bio: e.target.value})}
+                      />
+                    </div>
+                    <div className="profile-field">
+                      <h3>全名</h3>
+                      <input 
+                        type="text"
+                        className="profile-input"
+                        value={tempUser.fullName}
+                        onChange={(e) => setTempUser({...tempUser, fullName: e.target.value})}
+                      />
+                    </div>
+                    <div className="profile-field">
+                      <h3>电子邮件</h3>
+                      <input 
+                        type="email"
+                        className="profile-input"
+                        value={tempUser.email}
+                        onChange={(e) => setTempUser({...tempUser, email: e.target.value})}
+                      />
+                    </div>
+                    <div className="profile-field">
+                      <h3>性别</h3>
+                      <select
+                        className="profile-input"
+                        value={tempUser.gender}
+                        onChange={(e) => setTempUser({...tempUser, gender: e.target.value})}
+                      >
+                        <option value="">不选择</option>
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                        <option value="other">其他</option>
+                      </select>
+                    </div>
+                  </form>
+                ) : (
+                  <>
+                    <div className="profile-field">
+                      <h3>个人简介</h3>
+                      <p className="profile-bio">{user.bio}</p>
+                    </div>
+                    <div className="profile-field">
+                      <h3>全名</h3>
+                      <p>{user.fullName || '未设置'}</p>
+                    </div>
+                    <div className="profile-field">
+                      <h3>电子邮件</h3>
+                      <p>{user.email || '未设置'}</p>
+                    </div>
+                    <div className="profile-field">
+                      <h3>性别</h3>
+                      <p>{user.gender ? (user.gender === 'male' ? '男' : user.gender === 'female' ? '女' : '其他') : '未设置'}</p>
+                    </div>
+                    <div className="profile-field">
+                      <h3>加入日期</h3>
+                      <p>{user.dateJoined}</p>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+
+            {activeTab === 'experiments' && (
+              <div className="experiments-section">
+                {!showExperimentForm && (
+                  <button className="add-experiment-button" onClick={() => setShowExperimentForm(true)}>
+                    <FiPlus /> 添加新实验
+                  </button>
+                )}
+                
+                {showExperimentForm && (
+                  <div className="experiment-form">
+                    <h3>添加新实验</h3>
+                    <div className="profile-field">
+                      <h3>实验名称</h3>
+                      <input 
+                        type="text"
+                        className="profile-input"
+                        value={newExperiment.name}
+                        onChange={(e) => setNewExperiment({...newExperiment, name: e.target.value})}
+                      />
+                    </div>
+                    <div className="profile-field">
+                      <h3>实验描述</h3>
+                      <textarea 
+                        className="profile-bio-input"
+                        value={newExperiment.description}
+                        onChange={(e) => setNewExperiment({...newExperiment, description: e.target.value})}
+                      />
+                    </div>
+                    <div className="experiment-form-actions">
+                      <button className="cancel-button" onClick={() => setShowExperimentForm(false)}>取消</button>
+                      <button className="add-button" onClick={addExperiment}>添加实验</button>
+                    </div>
+                  </div>
+                )}
+                
+                <div className="experiments-list">
+                  {experiments.length > 0 ? (
+                    experiments.map((exp, index) => (
+                      <div className="experiment-item" key={index}>
+                        <h3>{exp.name}</h3>
+                        <p>{exp.description}</p>
+                        <button 
+                          className="delete-experiment-button" 
+                          onClick={() => deleteExperiment(index)}
+                        >
+                          <FiX />
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="no-history">还没有添加任何实验</p>
+                  )}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {avatarClicked && (
+          <div className="large-avatar-overlay" onClick={handleLargeAvatarClose}>
+            <div className="large-avatar-container">
+              <img src={user.avatar} alt={user.username} className="large-avatar" />
+              <button className="close-large-avatar" onClick={handleLargeAvatarClose}>
+                <FiX />
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  ) : null;
+};
+
+export default ProfileModal;

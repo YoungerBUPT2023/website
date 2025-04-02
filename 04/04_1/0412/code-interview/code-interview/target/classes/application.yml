@@ -1,0 +1,5 @@
+
+#配置支持循环依赖
+spring:
+  main:
+    allow-circular-references: true

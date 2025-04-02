@@ -1,0 +1,263 @@
+.experiment-lab {
+  padding: 20px;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.starry-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.lab-container {
+  display: flex;
+  gap: 20px;
+  height: calc(100vh - 100px);
+  position: relative;
+  z-index: 1;
+  margin-top: 80px;
+}
+
+/* 视频播放器样式 */
+.video-player {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-header {
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+.video-title {
+  margin: 0 0 16px 0;
+  color: #61dafb;
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px rgba(97, 218, 251, 0.5);
+}
+
+.video-info {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-label {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.status-inactive {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.status-active {
+  background-color: rgba(24, 144, 255, 0.1);
+  color: #1890ff;
+}
+
+.time-display {
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.player-container {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  background-color: #000;
+  overflow: hidden;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-container iframe {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 500px;
+  border: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.player-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+}
+
+.player-frame > div {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.no-video-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  z-index: 1;
+}
+
+.message-content {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.message-icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.sub-message {
+  color: #999;
+  font-size: 0.9em;
+  margin-top: 5px;
+}
+
+.player-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+}
+
+.control-info {
+  color: white;
+}
+
+.stream-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fullscreen-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fullscreen-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 全屏模式下的样式 */
+:fullscreen .player-container {
+  background: black;
+  width: 100vw;
+  height: 100vh;
+}
+
+:-webkit-full-screen .player-container {
+  background: black;
+  width: 100vw;
+  height: 100vh;
+}
+
+:-moz-full-screen .player-container {
+  background: black;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* 自定义滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(30, 30, 30, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(97, 218, 251, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(97, 218, 251, 0.5);
+}
+
+.source-switch {
+  display: flex;
+  gap: 10px;
+  margin-left: 20px;
+}
+
+.switch-button {
+  background: rgba(97, 218, 251, 0.1);
+  border: 1px solid rgba(97, 218, 251, 0.3);
+  color: #fff;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.switch-button:hover {
+  background: rgba(97, 218, 251, 0.2);
+  border-color: rgba(97, 218, 251, 0.5);
+}
+
+.switch-button.active {
+  background: rgba(97, 218, 251, 0.3);
+  border-color: #61dafb;
+}
+
+.source-info {
+  margin-left: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9em;
+}

@@ -1,0 +1,185 @@
+.education-posts-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem 0;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.education-post {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(14, 22, 40, 0.6);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(97, 218, 251, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.education-post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border-color: rgba(97, 218, 251, 0.4);
+}
+
+.post-image {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.post-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.education-post:hover .post-image img {
+  transform: scale(1.05);
+}
+
+.post-content {
+  padding: 1.5rem;
+}
+
+.post-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #61dafb;
+}
+
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.post-author {
+  position: relative;
+  padding-right: 1rem;
+}
+
+.post-author::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.post-summary {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.tag {
+  background-color: rgba(97, 218, 251, 0.15);
+  color: #61dafb;
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  transition: background-color 0.3s ease;
+}
+
+.tag:hover {
+  background-color: rgba(97, 218, 251, 0.3);
+}
+
+.post-full-content {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  font-size: 1rem;
+  border-top: 1px solid rgba(97, 218, 251, 0.15);
+  padding-top: 1.5rem;
+}
+
+.post-full-content h3 {
+  color: #61dafb;
+  margin: 1.5rem 0 0.75rem;
+  font-size: 1.2rem;
+}
+
+.post-full-content p {
+  margin-bottom: 1rem;
+}
+
+.post-full-content ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.post-full-content li {
+  margin-bottom: 0.5rem;
+}
+
+.post-full-content strong {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+}
+
+/* 响应式设计 */
+@media (min-width: 768px) {
+  .education-post {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .post-image {
+    width: 300px;
+    height: auto;
+  }
+
+  .post-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 767px) {
+  .post-image {
+    height: 200px;
+  }
+
+  .post-title {
+    font-size: 1.3rem;
+  }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.education-post {
+  animation: fadeIn 0.5s ease-out;
+  animation-fill-mode: backwards;
+}
+
+.education-post:nth-child(1) { animation-delay: 0.1s; }
+.education-post:nth-child(2) { animation-delay: 0.2s; }
+.education-post:nth-child(3) { animation-delay: 0.3s; }
+.education-post:nth-child(4) { animation-delay: 0.4s; }
+.education-post:nth-child(5) { animation-delay: 0.5s; }
+</rewritten_file> 

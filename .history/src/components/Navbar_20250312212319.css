@@ -1,0 +1,182 @@
+/* 添加书法字体 */
+@font-face {
+  font-family: 'ChineseCalligraphy';
+  src: url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  color: #00ffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.calligraphy-text {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 2rem;
+  background: linear-gradient(to right, #ff4b91, #ffb800, #00ffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 10px rgba(255, 75, 145, 0.5);
+  position: relative;
+  display: inline-block;
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+.calligraphy-text::after {
+  display: none;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px rgba(255, 75, 145, 0.5), 0 0 10px rgba(255, 75, 145, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 10px rgba(255, 75, 145, 0.7), 0 0 20px rgba(255, 75, 145, 0.5), 0 0 30px rgba(255, 75, 145, 0.3);
+  }
+}
+
+.normal-text {
+  color: #00ffff;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar-item {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-item:hover {
+  color: #00ffff;
+}
+
+.navbar-end {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.login-button, .logout-button {
+  background-color: transparent;
+  border: 1px solid #00ffff;
+  color: #00ffff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover, .logout-button:hover {
+  background-color: #00ffff;
+  color: black;
+}
+
+.login-button-highlight {
+  background-color: #FF4B91;
+  border: none;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(255, 75, 145, 0.5);
+}
+
+.login-button-highlight:hover {
+  background-color: #FF7676;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(255, 75, 145, 0.7);
+}
+
+.login-button-highlight:active {
+  transform: translateY(0);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.navbar-avatar:hover {
+  transform: scale(1.1);
+}
+
+.navbar-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.default-avatar {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.username-link {
+  color: #00ffff;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.username-link:hover {
+  color: #7f00ff;
+}
+
+.contact-link {
+  color: #4facfe;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.contact-link:hover {
+  background: rgba(79, 172, 254, 0.1);
+  color: #00f2fe;
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+} 

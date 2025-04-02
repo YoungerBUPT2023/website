@@ -1,0 +1,63 @@
+.vr-lab {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.vr-experiment {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+.icon-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-title span {
+  font-size: 24px;
+}
+
+/* 视频播放器样式 */
+.video-player {
+  width: 80%;
+  max-width: 800px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video-title {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.player-container {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.no-video-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+} 

@@ -1,0 +1,4 @@
+# ???????=??????????  ctrl+alt+??
+org.springframework.context.ApplicationContextInitializer=com.itheima.initializer.MyApplicationContextInitializer
+
+org.springframework.context.ApplicationListener=com.itheima.listener.MyListener

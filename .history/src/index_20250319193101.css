@@ -1,0 +1,878 @@
+/* 导入字体 */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&family=ZCOOL+QingKe+HuangYou&family=Long+Cang&display=swap');
+
+/* 全局样式 */
+:root {
+  --gradient-primary: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+  --gradient-secondary: linear-gradient(135deg, #0061ff 0%, #60efff 100%);
+  --gradient-accent: linear-gradient(135deg, #FF4B91 0%, #FF7676 100%);
+  --gradient-title: linear-gradient(to right, #FF4B91, #4facfe);
+  --gradient-calligraphy: linear-gradient(to right, #ff4b91, #ffb800, #00ffff);
+  --gradient-dark: linear-gradient(180deg, #0a0b0c 0%, #1a1b1c 100%);
+  --text-glow: 0 0 10px rgba(0, 242, 254, 0.5);
+  --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* 重置默认样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  background: #0a0b0c;
+  color: #ffffff;
+  line-height: 1.6;
+}
+
+/* 导航栏样式 */
+.navbar {
+  background: rgba(10, 11, 12, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  padding: 1rem 2rem;
+}
+
+.nav-logo {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: var(--text-glow);
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+
+.nav-links a {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* 首页样式 */
+.home {
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.hero-section {
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to bottom, #0a0b0c, #1a1b1c);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(0, 242, 254, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  font-size: 5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.calligraphy-hero-text {
+  font-family: 'Long Cang', cursive;
+  font-size: 7rem;
+  font-weight: normal;
+  background: var(--gradient-calligraphy);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(255, 75, 145, 0.7);
+  position: relative;
+  display: inline-block;
+  animation: heroGlow 2s ease-in-out infinite alternate;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 0.5rem;
+}
+
+.normal-hero-text {
+  font-size: 3rem;
+  background: var(--gradient-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes heroGlow {
+  0% {
+    text-shadow: 0 0 10px rgba(255, 75, 145, 0.5), 0 0 20px rgba(255, 75, 145, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 20px rgba(255, 75, 145, 0.7), 0 0 30px rgba(255, 75, 145, 0.5), 0 0 40px rgba(255, 75, 145, 0.3);
+  }
+}
+
+.hero-title-glow {
+  display: none;
+}
+
+.hero-subtitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  letter-spacing: 0.02em;
+  opacity: 0.9;
+  max-width: 700px;
+  line-height: 1.4;
+}
+
+.hero-circles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.hero-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, rgba(255, 75, 145, 0.1), rgba(79, 172, 254, 0.1));
+  mix-blend-mode: screen;
+  opacity: 0.1;
+  filter: blur(50px);
+  animation: pulse 10s infinite;
+}
+
+.circle-1 {
+  width: 300px;
+  height: 300px;
+  top: -150px;
+  left: -150px;
+  animation-delay: 0s;
+}
+
+.circle-2 {
+  width: 400px;
+  height: 400px;
+  bottom: -200px;
+  right: -200px;
+  animation-delay: -3s;
+}
+
+.circle-3 {
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -6s;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.1; }
+  50% { transform: scale(1.2); opacity: 0.2; }
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  padding: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(255, 75, 145, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card a {
+  color: white;
+  text-decoration: none;
+}
+
+.feature-content {
+  position: relative;
+  z-index: 1;
+}
+
+.feature-icon-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.feature-icon {
+  position: relative;
+  z-index: 2;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.feature-icon-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.feature-card h3 {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.feature-card p {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin-bottom: 2rem;
+}
+
+.feature-arrow {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover .feature-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 实验室样式更新 */
+.experiment-lab {
+  padding: 6rem 2rem 2rem;
+  min-height: 100vh;
+  background: var(--gradient-dark);
+}
+
+.lab-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.editor-header h2 {
+  font-family: 'Syncopate', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  color: #fff;
+}
+
+.editor-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.control-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.run-btn {
+  padding: 0.5rem 1.5rem;
+  background: var(--gradient-accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.run-btn.running {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.editor-container {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 1rem;
+}
+
+.output-container {
+  padding: 1.5rem 2rem;
+}
+
+.output-container h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  opacity: 0.8;
+}
+
+.output-window {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  font-family: 'Fira Code', monospace;
+  line-height: 1.6;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.output-window::-webkit-scrollbar {
+  width: 8px;
+}
+
+.output-window::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.output-window::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+/* VR实验室样式 */
+.vr-lab {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  overflow: hidden;
+}
+
+/* 控制面板 */
+.controls-panel {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.control-btn {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.control-btn.active {
+  background: var(--gradient-accent);
+  border-color: transparent;
+}
+
+/* 标记点样式 */
+.marker {
+  position: relative;
+  cursor: pointer;
+}
+
+.marker-dot {
+  width: 12px;
+  height: 12px;
+  background: #FF4B91;
+  border-radius: 50%;
+  position: relative;
+}
+
+.marker-dot::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 75, 145, 0.3);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 2s infinite;
+}
+
+.marker-label {
+  position: absolute;
+  top: -2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.marker:hover .marker-label {
+  opacity: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* 作品展示页面样式 */
+.gallery {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery h1 {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #333;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+/* 星星背景动画 */
+.stars-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  background: #fff;
+  box-shadow: 0 0 2px #fff;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+    letter-spacing: 0;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .nav-logo {
+    font-size: 1.2rem;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+    padding: 2rem 1rem;
+  }
+  
+  .feature-card {
+    padding: 2rem;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.4rem;
+  }
+}
+
+/* 在现有的 CSS 中添加 */
+.code-editor {
+  width: 100%;
+  min-height: 500px;
+  padding: 1rem;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  border: none;
+  border-radius: 4px;
+  resize: none;
+  outline: none;
+  tab-size: 2;
+}
+
+.code-editor::placeholder {
+  color: #666;
+}
+
+.editor-container {
+  background: #1e1e1e;
+  border-radius: 8px;
+  margin: 1rem;
+  overflow: hidden;
+}
+
+/* 编辑器选项样式 */
+.editor-title {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.editor-options {
+  display: flex;
+  gap: 1rem;
+}
+
+.language-select,
+.theme-select {
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.language-select:hover,
+.theme-select:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.language-select option,
+.theme-select option {
+  background: #1e1e1e;
+  color: #fff;
+}
+
+/* 实验示例模块样式 */
+.experiments-showcase {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.showcase-header {
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.showcase-title {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  background: var(--gradient-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.showcase-subtitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+  opacity: 0.8;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.experiments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.experiment-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.experiment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.experiment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.experiment-card:hover::before {
+  transform: scaleX(1);
+}
+
+.experiment-thumbnail {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.experiment-thumbnail::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.experiment-content {
+  padding: 1.5rem;
+  position: relative;
+}
+
+.experiment-badge {
+  position: absolute;
+  top: -18px;
+  right: 20px;
+  padding: 0.25rem 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  background: var(--gradient-accent);
+  color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(255, 75, 145, 0.4);
+}
+
+.experiment-title {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.experiment-description {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.8;
+  margin-bottom: 1.5rem;
+  min-height: 80px;
+}
+
+.experiment-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
+.experiment-date {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.experiment-author {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.experiment-link {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: white;
+  text-decoration: none;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.experiment-link:hover {
+  background: var(--gradient-primary);
+  border-color: transparent;
+}
+
+.view-all-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.view-all-btn {
+  padding: 0.75rem 2rem;
+  background: var(--gradient-secondary);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.view-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 97, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+  .experiments-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .showcase-title {
+    font-size: 2rem;
+  }
+  
+  .showcase-subtitle {
+    font-size: 1rem;
+  }
+  
+  .experiment-description {
+    min-height: auto;
+  }
+} 

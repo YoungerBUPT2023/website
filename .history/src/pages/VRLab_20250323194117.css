@@ -1,0 +1,382 @@
+/* 重置全局样式 */
+.vr-lab-page {
+  height: auto !important;
+  min-height: 100% !important;
+  overflow: visible !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* 主容器样式 */
+.experiment-lab {
+  position: relative;
+  background: #000;
+  color: #fff;
+  min-height: 300vh;
+  padding: 20px;
+  padding-top: 20px;
+  overflow-y: auto;
+  display: block;
+}
+
+/* 星空背景 */
+.starry-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 内容容器 */
+.lab-container {
+  padding-top: 40px;
+  min-height: 300vh;
+  color: white;
+  position: relative;
+  z-index: 1;
+  padding-bottom: 300px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 80px;
+}
+
+/* 视频播放器容器 */
+.video-player {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 50px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(97, 218, 251, 0.3);
+  min-height: 800px;
+}
+
+/* 视频播放区域 */
+.player-container {
+  width: 100%;
+  height: 700px;
+  background-color: #000;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* 确保ReactPlayer正确显示 */
+.player-container .react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 视频控制区域 */
+.player-controls {
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 2;
+}
+
+/* 视频控制信息 */
+.control-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+/* 讨论区 */
+.discussion-panel {
+  width: 100%;
+  min-height: 800px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(97, 218, 251, 0.3);
+  margin-bottom: 150px;
+}
+
+/* 视频播放器样式 */
+.video-header {
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+.video-title {
+  margin: 0 0 16px 0;
+  color: #61dafb;
+  font-size: 1.5rem;
+  text-shadow: 0 0 10px rgba(97, 218, 251, 0.5);
+}
+
+.video-info {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info-label {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+}
+
+.status-inactive {
+  background-color: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.status-active {
+  background-color: rgba(24, 144, 255, 0.1);
+  color: #1890ff;
+}
+
+.time-display {
+  font-family: 'SF Mono', SFMono-Regular, ui-monospace, monospace;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.source-switch {
+  display: flex;
+  gap: 10px;
+}
+
+.switch-button {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(97, 218, 251, 0.3);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 0.875rem;
+  padding: 6px 12px;
+  transition: all 0.3s;
+}
+
+.switch-button:hover {
+  background: rgba(97, 218, 251, 0.1);
+  color: white;
+}
+
+.switch-button.active {
+  background: rgba(97, 218, 251, 0.15);
+  color: #61dafb;
+}
+
+.source-info {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* 消息容器 */
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.message {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 85%;
+  align-self: flex-start;
+}
+
+.own-message {
+  background: rgba(97, 218, 251, 0.1);
+  align-self: flex-end;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.85rem;
+}
+
+.message-username {
+  font-weight: bold;
+  color: #61dafb;
+}
+
+.message-time {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.message-content {
+  word-break: break-word;
+}
+
+.message-input-container {
+  display: flex;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.message-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: white;
+  padding: 10px;
+  font-size: 0.9rem;
+}
+
+.message-input:focus {
+  outline: none;
+  border-color: rgba(97, 218, 251, 0.5);
+}
+
+.send-button {
+  background: rgba(97, 218, 251, 0.2);
+  color: #61dafb;
+  border: none;
+  border-radius: 4px;
+  padding: 0 15px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.send-button:hover {
+  background: rgba(97, 218, 251, 0.3);
+}
+
+.discussion-header {
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.discussion-header h3 {
+  margin: 0;
+  color: #61dafb;
+  font-size: 1.2rem;
+}
+
+/* 课程选择器样式 */
+.course-selector-container {
+  position: relative;
+  width: calc(100% - 30px);
+  margin: 0 15px 15px;
+  z-index: 5;
+}
+
+.selected-course {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: rgba(32, 40, 65, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(97, 218, 251, 0.3);
+}
+
+.selected-course:hover {
+  background-color: rgba(32, 40, 65, 0.9);
+  border-color: rgba(97, 218, 251, 0.7);
+  box-shadow: 0 0 15px rgba(97, 218, 251, 0.2);
+}
+
+.dropdown-icon {
+  font-size: 12px;
+  color: #61dafb;
+  margin-left: 10px;
+  transition: transform 0.3s ease;
+}
+
+.courses-dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: rgba(25, 32, 48, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(97, 218, 251, 0.2);
+  animation: fadeIn 0.3s ease;
+  z-index: 10;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.course-item {
+  padding: 12px 15px;
+  color: #eee;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.course-item:hover {
+  background: rgba(97, 218, 251, 0.15);
+  color: #fff;
+}
+
+.course-item.active {
+  background: rgba(97, 218, 251, 0.2);
+  color: #61dafb;
+  border-left: 3px solid #61dafb;
+}
+
+/* 为下拉列表添加滚动条样式 */
+.courses-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.courses-dropdown::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.courses-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(97, 218, 251, 0.3);
+  border-radius: 3px;
+}
+
+.courses-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(97, 218, 251, 0.5);
+}

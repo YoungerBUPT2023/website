@@ -1,0 +1,190 @@
+/* 我的实验部分样式 */
+.my-experiments-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(97, 218, 251, 0.2);
+}
+
+.my-experiments-section h2 {
+  font-size: 1.8rem;
+  color: #61dafb;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.experiments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.experiment-card {
+  background: rgba(30, 30, 40, 0.7);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(97, 218, 251, 0.1);
+}
+
+.experiment-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  border-color: rgba(97, 218, 251, 0.3);
+}
+
+.experiment-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.experiment-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.experiment-card:hover .experiment-image img {
+  transform: scale(1.05);
+}
+
+.experiment-info {
+  padding: 1.5rem;
+}
+
+.experiment-info h3 {
+  font-size: 1.25rem;
+  color: #61dafb;
+  margin: 0 0 0.75rem 0;
+}
+
+.experiment-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.experiment-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.experiment-likes {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.experiment-likes i {
+  color: #61dafb;
+}
+
+.experiment-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.experiment-tags .tag {
+  background: rgba(97, 218, 251, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(97, 218, 251, 0.2);
+}
+
+.experiment-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.experiment-actions button {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-button {
+  background-color: rgba(97, 218, 251, 0.2);
+  color: #61dafb;
+}
+
+.edit-button:hover {
+  background-color: rgba(97, 218, 251, 0.3);
+}
+
+.delete-button {
+  background-color: rgba(255, 82, 82, 0.2);
+  color: #ff5252;
+}
+
+.delete-button:hover {
+  background-color: rgba(255, 82, 82, 0.3);
+}
+
+.no-experiments {
+  text-align: center;
+  padding: 3rem;
+  background: rgba(30, 30, 40, 0.7);
+  border-radius: 12px;
+  border: 1px dashed rgba(97, 218, 251, 0.3);
+}
+
+.no-experiments p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.create-experiment-button {
+  background: #61dafb;
+  color: #1a1f2e;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.create-experiment-button:hover {
+  background: #4fc3f7;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .experiments-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .experiments-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .experiment-actions {
+    flex-direction: column;
+  }
+} 

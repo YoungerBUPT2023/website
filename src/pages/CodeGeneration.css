@@ -1,0 +1,558 @@
+.space-view {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1f2c 0%, #2d3436 100%);
+  padding: 8rem 2rem 2rem;
+  color: #fff;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.code-generation-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 1;
+}
+
+.input-section, .output-section {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  position: relative;
+  min-height: 500px;
+}
+
+.input-section h3, .output-section h3 {
+  color: #61dafb;
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+textarea {
+  width: 100%;
+  min-height: 400px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(97, 218, 251, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  color: #fff;
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 16px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #61dafb;
+  box-shadow: 0 0 0 2px rgba(97, 218, 251, 0.2);
+}
+
+.output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.language-selector {
+  background: rgba(97, 218, 251, 0.1);
+  border: 1px solid rgba(97, 218, 251, 0.2);
+  border-radius: 8px;
+  color: #61dafb;
+  padding: 0.8rem 1.5rem;
+  font-size: 16px;
+  cursor: pointer;
+  min-width: 150px;
+}
+
+.language-selector:focus {
+  outline: none;
+  border-color: #61dafb;
+}
+
+.code-output {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 0;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Consolas', monospace;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+.generate-button {
+  background: linear-gradient(135deg, #61dafb 0%, #2188ff 100%);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  padding: 1rem 2rem;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  width: fit-content;
+  align-self: flex-end;
+}
+
+.generate-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.3);
+}
+
+.generate-button:active {
+  transform: translateY(0);
+}
+
+.generate-button.generating {
+  background: linear-gradient(135deg, #2188ff 0%, #61dafb 100%);
+  opacity: 0.8;
+  cursor: not-allowed;
+}
+
+/* 添加代码高亮样式 */
+.code-output code {
+  color: #e2e8f0;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* 添加滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(97, 218, 251, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(97, 218, 251, 0.5);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .space-view {
+    padding: 4rem 1rem 1rem;
+  }
+  
+  .code-generation-container {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+  
+  .input-section, .output-section {
+    min-height: 400px;
+  }
+}
+
+/* 添加背景动画效果 */
+.space-view::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(2px 2px at 20px 30px, #61dafb, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 40px 70px, #61dafb, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 50px 160px, #61dafb, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 90px 40px, #61dafb, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 130px 80px, #61dafb, rgba(0,0,0,0));
+  background-size: 200px 200px;
+  animation: stars 4s linear infinite;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+@keyframes stars {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-200px);
+  }
+}
+
+/* 添加科技感装饰 */
+.input-section::before,
+.output-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent,
+    rgba(78, 172, 254, 0.5),
+    transparent
+  );
+}
+
+.input-section::after,
+.output-section::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  background-color: #4facfe;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #4facfe;
+}
+
+h2 {
+  margin: 0 0 20px 0;
+  color: #4facfe;
+  font-size: 1.4rem;
+  position: relative;
+  padding-left: 15px;
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  background: #4facfe;
+  border-radius: 2px;
+}
+
+.experiment-input {
+  flex: 1;
+  background-color: rgba(51, 51, 51, 0.7);
+  border: 1px solid rgba(78, 172, 254, 0.2);
+  border-radius: 8px;
+  padding: 15px;
+  color: #fff;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+  font-family: 'Consolas', monospace;
+}
+
+.experiment-input:focus {
+  box-shadow: 0 0 15px rgba(78, 172, 254, 0.2);
+  border-color: rgba(78, 172, 254, 0.4);
+}
+
+/* 处理步骤样式 */
+.processing-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 20px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.processing-step {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: rgba(51, 51, 51, 0.7);
+  border-radius: 8px;
+  border-left: 3px solid rgba(78, 172, 254, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transform: translateX(-50px);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+.processing-step.visible {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.step-indicator {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+  position: relative;
+  background-color: rgba(51, 51, 51, 0.8);
+  border: 2px solid rgba(78, 172, 254, 0.5);
+}
+
+.step-indicator.active {
+  border-color: #4facfe;
+}
+
+.step-indicator.completed {
+  background-color: rgba(76, 175, 80, 0.2);
+  border-color: #4caf50;
+}
+
+.step-text {
+  flex: 1;
+  font-size: 1rem;
+  color: #eee;
+}
+
+/* 正在旋转的圆圈指示器 */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(79, 172, 254, 0.3);
+  border-radius: 50%;
+  border-top-color: #4facfe;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 完成状态的对钩图标 */
+.checkmark {
+  width: 16px;
+  height: 16px;
+  fill: #4caf50;
+  animation: scale-in 0.3s ease-out;
+}
+
+@keyframes scale-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 未开始状态的小圆点 */
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+/* 输出区域标题部分样式 */
+.output-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* 语言选择器样式 */
+.language-selector {
+  background-color: rgba(51, 51, 51, 0.7);
+  color: #4facfe;
+  border: 1px solid rgba(78, 172, 254, 0.4);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  min-width: 140px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%234facfe' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  padding-right: 30px;
+}
+
+.language-selector:hover {
+  background-color: rgba(51, 51, 51, 0.9);
+  border-color: rgba(78, 172, 254, 0.6);
+}
+
+.language-selector:focus {
+  border-color: #4facfe;
+  box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.2);
+}
+
+.language-selector option {
+  background-color: #2a2a2a;
+  color: #fff;
+}
+
+.language-selector:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* 切换原始响应按钮样式 */
+.toggle-raw-btn {
+  background-color: rgba(78, 172, 254, 0.2);
+  color: #4facfe;
+  border: 1px solid rgba(78, 172, 254, 0.4);
+  border-radius: 4px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  white-space: nowrap;
+}
+
+.toggle-raw-btn:hover {
+  background-color: rgba(78, 172, 254, 0.3);
+}
+
+.toggle-raw-btn:active {
+  transform: translateY(1px);
+}
+
+/* 错误状态样式 */
+.has-error .code-output {
+  border-color: rgba(255, 99, 71, 0.5);
+}
+
+/* 步骤内容容器 */
+.step-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 进度文本样式 */
+.step-progress-text {
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #7fdbff;
+  opacity: 0;
+  animation: fade-in 0.5s ease forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 完成提示文本样式 */
+.step-complete-text {
+  padding: 4px 8px;
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  font-weight: 500;
+  animation: scale-in 0.3s ease-out;
+}
+
+/* 打字机光标效果只在正在打字时显示 */
+.code-output code.typing::after {
+  content: '|';
+  display: inline-block;
+  color: rgba(78, 172, 254, 0.8);
+  animation: cursor-blink 0.5s infinite;
+  font-weight: 100;
+  margin-left: 2px;
+}
+
+@keyframes cursor-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* 移除非打字状态的光标 */
+.code-output code::after {
+  content: '';
+}
+
+/* 错误状态样式 */
+.code-output.has-error {
+  border-color: rgba(255, 99, 71, 0.6);
+  box-shadow: 0 0 10px rgba(255, 99, 71, 0.2);
+}
+
+/* 优化代码显示 */
+.code-output code {
+  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+  color: #f8f8f2;
+  padding: 0;
+}
+
+/* 优化打字机效果的加载状态 */
+.code-output.loading {
+  background-color: rgba(51, 51, 51, 0.8);
+  position: relative;
+}
+
+.code-output.loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, transparent, #4facfe, transparent);
+  animation: loading-bar 1.5s infinite;
+}
+
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* 删除跳过动画提示 */
+.skip-typing-hint {
+  display: none; /* 隐藏这个提示 */
+} 

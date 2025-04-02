@@ -1,0 +1,465 @@
+/* 整体页面样式 */
+.gallery-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+/* 顶部英雄区域 */
+.gallery-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1500&q=80');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.gallery-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.gallery-hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.gallery-hero p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.hero-upload-btn, .hero-login-btn {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hero-upload-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.hero-upload-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.hero-login-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.hero-login-btn:hover {
+  background-color: #0b7dda;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 主容器 */
+.gallery-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+  position: relative;
+}
+
+/* 筛选器 */
+.gallery-filter {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+
+.filter-btn {
+  background-color: #f1f1f1;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.filter-btn.active {
+  background-color: #2196F3;
+  color: white;
+}
+
+/* 上传表单 */
+.upload-form-container {
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.upload-form h2 {
+  margin-top: 0;
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  text-align: center;
+  position: relative;
+}
+
+.upload-form h2:after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: #4CAF50;
+  margin: 10px auto 0;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #444;
+  font-size: 1rem;
+}
+
+.form-group input[type="text"],
+.form-group textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input[type="text"]:focus,
+.form-group textarea:focus {
+  border-color: #2196F3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.file-upload-area {
+  position: relative;
+  border: 2px dashed #ddd;
+  border-radius: 6px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s;
+  background-color: #f9f9f9;
+}
+
+.file-upload-area:hover {
+  border-color: #2196F3;
+  background-color: #f0f8ff;
+}
+
+.file-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.file-upload-button {
+  display: inline-block;
+}
+
+.file-upload-button span {
+  display: inline-block;
+  background-color: #2196F3;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.file-name {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.file-preview {
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: white;
+  text-align: center;
+}
+
+.file-preview img {
+  max-width: 100%;
+  max-height: 250px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+
+.file-hint {
+  margin-top: 8px;
+  color: #777;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.submit-btn, .cancel-btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.submit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.submit-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+}
+
+.submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+/* 作品网格 */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.gallery-item {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item-image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery-item h3 {
+  margin: 0 0 10px;
+  color: #333;
+  font-size: 1.3rem;
+}
+
+.gallery-item-description {
+  color: #666;
+  margin: 0 0 15px;
+  flex-grow: 1;
+  line-height: 1.5;
+}
+
+.gallery-item-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #888;
+  font-size: 0.85rem;
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.no-works {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.no-works p {
+  color: #777;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.upload-btn-empty {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.upload-btn-empty:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+/* 浮动上传按钮 */
+.floating-upload-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+  z-index: 100;
+}
+
+.floating-upload-btn span {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.floating-upload-btn:hover {
+  background-color: #45a049;
+  transform: translateY(-5px) rotate(90deg);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .gallery-hero h1 {
+    font-size: 2rem;
+  }
+  
+  .gallery-hero p {
+    font-size: 1rem;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .submit-btn, .cancel-btn {
+    width: 100%;
+  }
+  
+  .floating-upload-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+  }
+} 

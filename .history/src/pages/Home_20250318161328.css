@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;500&family=Noto+Sans+SC:wght@300;400;500;600&family=SF+Pro+Display:wght@200;300;400;500;600&display=swap');
+
+/* 移除蓝色条带 */
+.home::before,
+.home::after {
+  display: none !important;
+}
+
+/* 添加自定义背景，确保没有蓝色条带 */
+.home {
+  position: relative;
+  background: #000;
+  font-family: 'SF Pro Display', 'Noto Sans SC', sans-serif;
+}
+
+.home-container {
+  padding-top: 80px;
+  min-height: 100vh;
+  color: white;
+}
+
+.features-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.features-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #000;
+  border-radius: 0;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  border: none;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feature-content {
+  padding: 2rem;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.feature-icon-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.feature-icon {
+  font-size: 3.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-short-desc {
+  margin: 1.5rem 0;
+  line-height: 1.5;
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.012em;
+  color: #86868b;
+}
+
+.feature-long-desc {
+  text-align: center;
+  margin: 2.5rem 0;
+  line-height: 1.5;
+}
+
+.feature-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  border-radius: 980px;
+  font-size: 1.1rem;
+  font-weight: 400;
+  transition: all 0.3s ease;
+  background: #0071e3;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+}
+
+.feature-button:hover {
+  background: #147ce5;
+}
+
+.feature-button-arrow {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.footer {
+  color: #86868b;
+  text-align: center;
+  padding: 40px 0;
+  margin-top: 40px;
+  font-size: 0.875rem;
+  background: #000;
+  border-top: 1px solid #333;
+}
+
+.footer-content p {
+  margin: 8px 0;
+}
+
+.footer a {
+  color: #2997ff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* 滚动指示器 */
+.scroll-indicator {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.scroll-indicator-text {
+  margin-bottom: 10px;
+  letter-spacing: 0.1em;
+  font-weight: 300;
+}
+
+.scroll-indicator-arrow {
+  width: 15px;
+  height: 15px;
+  border-right: 2px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.7);
+  transform: rotate(45deg);
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0) rotate(45deg);
+  }
+  50% {
+    transform: translateY(-5px) rotate(45deg);
+  }
+} 

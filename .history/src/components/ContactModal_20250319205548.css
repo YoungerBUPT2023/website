@@ -1,0 +1,293 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.contact-modal {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(20, 29, 47, 0.98));
+  border: 1px solid rgba(99, 125, 255, 0.2);
+  border-radius: 16px;
+  padding: 2.5rem 3.5rem;
+  width: 95%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  color: white;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+}
+
+.contact-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.contact-modal::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.7);
+  border-radius: 8px;
+}
+
+.contact-modal::-webkit-scrollbar-thumb {
+  background: rgba(99, 125, 255, 0.3);
+  border-radius: 8px;
+}
+
+.close-button {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: rgba(99, 125, 255, 0.1);
+  border: 1px solid rgba(99, 125, 255, 0.15);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  color: #fff;
+  background: rgba(99, 125, 255, 0.15);
+  transform: rotate(90deg);
+}
+
+.contact-modal h2 {
+  color: #fff;
+  margin-bottom: 1.8rem;
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+  letter-spacing: 0.02em;
+  position: relative;
+  padding-bottom: 0.8rem;
+}
+
+.contact-modal h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 1px;
+  background: rgba(99, 125, 255, 0.4);
+}
+
+.contact-content {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.application-intro {
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  grid-column: span 2;
+  background: rgba(30, 41, 59, 0.4);
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+.document-example {
+  grid-column: span 2;
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 0 0 1.5rem;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.document-example:hover {
+  background: rgba(30, 41, 59, 0.6);
+}
+
+.example-link {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(99, 125, 255, 0.8);
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  gap: 0.5rem;
+}
+
+.example-link:hover {
+  color: rgba(99, 125, 255, 1);
+  text-decoration: underline;
+}
+
+.example-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.application-requirements, 
+.evaluation-process, 
+.timeline, 
+.submission {
+  background: rgba(30, 41, 59, 0.4);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 0;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.application-requirements:hover, 
+.evaluation-process:hover, 
+.timeline:hover, 
+.submission:hover {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.submission {
+  grid-column: span 2;
+}
+
+.application-requirements::before,
+.evaluation-process::before,
+.timeline::before,
+.submission::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: rgba(99, 125, 255, 0.4);
+}
+
+.contact-content h3 {
+  color: #fff;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.contact-content h3::before {
+  content: '';
+  margin-right: 8px;
+  width: 6px;
+  height: 6px;
+  background: rgba(99, 125, 255, 0.6);
+  border-radius: 50%;
+}
+
+.contact-content ul {
+  padding-left: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-content ul li {
+  margin-bottom: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  position: relative;
+}
+
+.contact-content p {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.contact-content strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1rem;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.contact-item:hover {
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.icon {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: rgba(99, 125, 255, 0.15);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .contact-modal {
+    padding: 2rem 2.5rem;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .contact-modal {
+    padding: 1.5rem 2rem;
+    width: 95%;
+    max-width: 90%;
+  }
+  
+  .contact-modal h2 {
+    font-size: 1.6rem;
+  }
+  
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .application-intro {
+    grid-column: span 1;
+  }
+  
+  .document-example {
+    grid-column: span 1;
+  }
+  
+  .submission {
+    grid-column: span 1;
+  }
+  
+  .application-requirements, 
+  .evaluation-process, 
+  .timeline, 
+  .submission {
+    padding: 1.2rem;
+  }
+} 
