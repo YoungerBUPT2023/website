@@ -2,7 +2,7 @@ module.exports = {
   DB_CONFIG: {
     host: 'localhost',
     user: 'root',  // 使用root用户
-    password: '123456',  // MySQL密码
+    password: 'Uziismyking1020',  // 修改为正确的MySQL密码
     database: 'Spacelab',  // 更新为新创建的Spacelab数据库
     dialect: 'mysql'
   },
