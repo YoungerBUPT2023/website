@@ -365,6 +365,60 @@ const Gallery = () => {
     }
 
     try {
+      // 检查服务器是否可用 - 使用已有的API端点而不是健康检查
+      try {
+        const serverCheck = await fetch('http://localhost:5000/api/projects', { 
+          method: 'GET',
+          signal: AbortSignal.timeout(2000) // 2秒超时
+        });
+        
+        if (!serverCheck.ok) {
+          throw new Error('服务器不可用');
+        }
+      } catch (error) {
+        // 服务器不可用，使用本地存储模拟上传
+        console.log('服务器不可用，使用本地存储模拟上传');
+        
+        // 创建新项目对象
+        const newProject = {
+          id: Date.now(), // 使用时间戳作为临时ID
+          title: uploadData.title,
+          description: uploadData.description,
+          tags: uploadData.tags,
+          imageUrl: previewUrl, // 使用预览URL作为图片
+          author: username,
+          date: new Date().toISOString().split('T')[0], // 当前日期
+          detailedDescription: uploadData.description,
+          equipment: '未指定',
+          requirements: '未指定',
+          collaborators: [],
+          likes: 0,
+          liked: false,
+          comments: []
+        };
+        
+        // 添加到项目列表
+        setProjects(prevProjects => {
+          const updatedProjects = [newProject, ...prevProjects];
+          updateGlobalProjects(updatedProjects);
+          return updatedProjects;
+        });
+        
+        // 重置表单
+        setUploadData({
+          title: '',
+          description: '',
+          tags: []
+        });
+        setSelectedFile(null);
+        setPreviewUrl('');
+        setShowUploadModal(false);
+        
+        alert('作品已本地保存！(服务器当前不可用)');
+        return;
+      }
+
+      // 如果服务器可用，继续原有的上传逻辑
       const formData = new FormData();
       formData.append('file', selectedFile);
       formData.append('title', uploadData.title);
@@ -651,12 +705,25 @@ const Gallery = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/projects');
-        if (!response.ok) {
-          throw new Error('获取项目列表失败');
+        try {
+          const response = await fetch('http://localhost:5000/api/projects', {
+            signal: AbortSignal.timeout(3000) // 3秒超时
+          });
+          
+          if (!response.ok) {
+            throw new Error('获取项目列表失败');
+          }
+          
+          const data = await response.json();
+          setProjects(data);
+        } catch (error) {
+          console.error('获取项目列表错误:', error);
+          // 服务器不可用时，使用本地存储的数据
+          const savedProjects = localStorage.getItem('globalProjects');
+          if (savedProjects) {
+            setProjects(JSON.parse(savedProjects));
+          }
         }
-        const data = await response.json();
-        setProjects(data);
       } catch (error) {
         console.error('获取项目列表错误:', error);
       }
