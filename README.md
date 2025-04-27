@@ -33,7 +33,8 @@
      mysql -u root -p
      ```
    - 输入密码：Uziismyking1020
-   - 再使用数据库：USE spacelab;
+   - 再使用数据库：
+  
   正常使用网页- npm run server
      后可进行以下操作：
    - 查看所有表：SHOW TABLES;

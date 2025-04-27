@@ -3,6 +3,87 @@ import { useNavigate } from 'react-router-dom';
 import './Gallery.css';
 import PublishButton from '../components/PublishButton';
 import ProfileModal from '../components/ProfileModal';
+import { availableImages } from '../data/availableImages';
+
+// 随机打乱图片数组的函数
+function shuffleArray(array) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
+// 创建科普内容ID与图片的映射关系
+const scienceImageMapping = {
+  'jwst-1': '/kepu/webb_telescope.jpg',  // 韦伯望远镜
+  'mars-life-1': '/kepu/perseverance.jpg',  // 毅力号
+  'blackhole-1': '/kepu/black_hole.jpg',  // 黑洞
+  'starship-1': '/kepu/starship.jpg',  // 星舰
+  'iss-life-1': '/kepu/iss.jpg',  // 国际空间站
+  'exoplanets-1': '/kepu/exoplanets.jpg',  // 系外行星
+  'moon-return-1': '/kepu/artemis.jpg',  // 阿尔忒弥斯计划
+  'dark-matter-1': '/kepu/dark_matter.jpg',  // 暗物质
+  'space-debris-1': '/kepu/space_debris.jpg',  // 太空垃圾
+  'quantum-physics-space-1': '/kepu/quantum_physics.jpg',  // 量子物理
+  'solar-storm-1': '/kepu/solar_storm.jpg',  // 太阳风暴
+  'neutron-stars-1': '/kepu/neutron_star.jpg',  // 中子星
+  'space-medicine-1': '/kepu/space_medicine.jpg',  // 太空医学
+  'space-telescopes-1': '/kepu/space_telescopes.jpg',  // 太空望远镜
+  'mars-colony-1': '/kepu/mars_colony.jpg',  // 火星殖民
+  'gravitational-waves-1': '/kepu/gravitational_waves.jpg',  // 引力波
+  'cosmic-microwave-1': '/kepu/cosmic_microwave.jpg',  // 宇宙微波背景辐射
+  'space-mining-1': '/kepu/space_mining.jpg',  // 太空采矿
+  'space-tourism-1': '/kepu/space_tourism.jpg',  // 太空旅游
+  'multiverse-theory-1': '/kepu/multiverse.jpg',  // 多重宇宙
+  'space-radiation-1': '/kepu/space_radiation.jpg',  // 太空辐射
+  'space-food-1': '/kepu/space_food.jpg',  // 太空食品
+  'space-suits-1': '/kepu/space_suits.jpg',  // 太空服
+  'space-weather-1': '/kepu/space_weather.jpg',  // 太空天气
+  'rocket-science-1': '/kepu/rocket_science.jpg',  // 火箭科学
+  'space-time-1': '/kepu/space_time.jpg',  // 时空弯曲
+  'space-law-1': '/kepu/space_law.jpg',  // 太空法
+  'space-robotics-1': '/kepu/space_robotics.jpg',  // 太空机器人
+  'space-propulsion-1': '/kepu/space_propulsion.jpg',  // 太空推进
+  'space-habitats-1': '/kepu/space_habitats.jpg',  // 太空栖息地
+  'space-psychology-1': '/kepu/space_psychology.jpg',  // 太空心理学
+  'space-communication-1': '/kepu/space_communication.jpg',  // 深空通信
+  'space-agriculture-1': '/kepu/space_agriculture.jpg',  // 太空农业
+};
+
+// 创建一个函数，根据科普内容ID查找最合适的图片
+const findBestMatchingImage = (contentId, contentTitle) => {
+  // 首先检查是否有直接映射
+  if (scienceImageMapping[contentId]) {
+    // 检查映射的图片是否存在于可用图片列表中
+    if (availableImages.includes(scienceImageMapping[contentId])) {
+      return scienceImageMapping[contentId];
+    }
+  }
+  
+  // 如果没有直接映射或映射的图片不存在，尝试根据关键词匹配
+  const keywords = [
+    ...contentId.split('-'),
+    ...contentTitle.toLowerCase().split(' ')
+  ];
+  
+  // 尝试找到包含关键词的图片
+  for (const keyword of keywords) {
+    if (keyword.length < 3) continue; // 跳过太短的关键词
+    
+    const matchingImage = availableImages.find(img => 
+      img.toLowerCase().includes(keyword.toLowerCase())
+    );
+    
+    if (matchingImage) {
+      return matchingImage;
+    }
+  }
+  
+  // 如果没有找到匹配的图片，返回一个默认图片
+  return availableImages[0] || '/kepu/fallback-space.jpg';
+};
 
 const Gallery = () => {
   const navigate = useNavigate();
@@ -31,6 +112,9 @@ const Gallery = () => {
   // 个人资料模态窗口相关状态
   const [showOtherUserProfile, setShowOtherUserProfile] = useState(false);
   const [viewingUser, setViewingUser] = useState('');
+  // 在组件内部添加翻页相关的状态
+  const [currentSciencePage, setCurrentSciencePage] = useState(1);
+  const scienceItemsPerPage = 7; // 每页显示7个科普项目
 
   // --- Timeline Logic --- >
   const competitionYear = new Date().getFullYear(); // Use current year or set specific year
@@ -809,13 +893,12 @@ const Gallery = () => {
   };
 
   // ---> 太空科普内容数据 <---
-  const sciencePopContent = [
+  const originalSciencePopContent = [
     {
       id: 'jwst-1',
       type: 'article',
       title: '韦伯望远镜揭示宇宙奥秘',
       summary: '探索詹姆斯·韦伯太空望远镜拍摄的最新震撼图像和科学发现，以前所未有的清晰度揭示遥远星系和恒星的诞生。',
-      // Updated JWST Image (Carina Nebula by JWST)
       imageUrl: '/kepu/weibo.jpg', 
       linkUrl: 'https://science.nasa.gov/mission/webb/',
     },
@@ -824,7 +907,6 @@ const Gallery = () => {
       type: 'article',
       title: '毅力号：在火星寻找生命的痕迹',
       summary: 'NASA的"毅力号"火星车继续在红色星球上寻找古代微生物生命的迹象。了解它的任务、最新发现和面临的挑战。',
-      // Updated Perseverance Image
       imageUrl: '/kepu/yilihao.jpg', 
       linkUrl: 'https://science.nasa.gov/mission/perseverance/',
     },
@@ -833,20 +915,573 @@ const Gallery = () => {
       type: 'video',
       title: '视频：黑洞是如何运作的？',
       summary: '一个引人入胜的科普视频，解释了黑洞背后的奇妙物理学、它们如何形成以及对时空产生的深刻影响。',
-      // Updated Black Hole Visualization Image
       imageUrl: '/kepu/heidong.jpeg', 
       linkUrl: 'https://www.youtube.com/watch?v=e-P5IFTqB9c',
     },
-      {
+    {
       id: 'starship-1',
       type: 'article',
       title: '星舰：通往月球和火星的阶梯',
       summary: '了解SpaceX的星舰计划，其探索月球和火星的宏伟目标，以及最近测试飞行的进展和未来的展望。',
-      // Updated Starship Image
       imageUrl: '/kepu/xingjian.jpeg', 
       linkUrl: 'https://www.spacex.com/vehicles/starship/',
     },
+    // 已有的新增科普内容
+    {
+      id: 'iss-life-1',
+      type: 'article',
+      title: '国际空间站：太空中的生活实验室',
+      summary: '探索宇航员在国际空间站上的日常生活，从睡眠、饮食到科学实验和太空行走，了解人类如何在太空环境中生存和工作。',
+      imageUrl: '/kepu/iss.jpg',
+      linkUrl: 'https://www.nasa.gov/mission/international-space-station/',
+    },
+    {
+      id: 'exoplanets-1',
+      type: 'article',
+      title: '系外行星探索：寻找第二个地球',
+      summary: '科学家已发现超过5000颗系外行星，其中一些可能适合生命存在。了解天文学家如何发现这些遥远的世界，以及它们对寻找地外生命的意义。',
+      imageUrl: '/kepu/exoplanets.jpg',
+      linkUrl: 'https://exoplanets.nasa.gov/',
+    },
+    {
+      id: 'moon-return-1',
+      type: 'video',
+      title: '视频：阿尔忒弥斯计划 - 人类重返月球',
+      summary: 'NASA的阿尔忒弥斯计划旨在将宇航员送回月球表面，并建立可持续的月球基地。这个视频详细介绍了这一雄心勃勃的计划及其科学目标。',
+      imageUrl: '/kepu/artemis.jpg',
+      linkUrl: 'https://www.youtube.com/watch?v=_T8cn2J13-4',
+    },
+    {
+      id: 'dark-matter-1',
+      type: 'article',
+      title: '暗物质与暗能量：宇宙的隐藏成分',
+      summary: '宇宙中约95%的内容是我们无法直接观测到的暗物质和暗能量。探索科学家如何推断它们的存在，以及它们对宇宙结构和命运的影响。',
+      imageUrl: '/kepu/dark-matter.jpg',
+      linkUrl: 'https://science.nasa.gov/astrophysics/focus-areas/what-is-dark-energy/',
+    },
+    {
+      id: 'space-debris-1',
+      type: 'article',
+      title: '太空垃圾危机：轨道上的威胁',
+      summary: '地球轨道上有数百万碎片在高速飞行，对卫星和空间站构成威胁。了解太空垃圾的来源、危害以及科学家正在开发的清理解决方案。',
+      imageUrl: '/kepu/space-debris.jpg',
+      linkUrl: 'https://www.esa.int/Space_Safety/Space_Debris',
+    },
+    {
+      id: 'quantum-physics-space-1',
+      type: 'video',
+      title: '视频：量子物理学如何改变我们对宇宙的理解',
+      summary: '量子物理学的奇特现象挑战了我们对现实的基本认知。这个视频探讨了量子理论如何帮助我们理解黑洞、宇宙起源和多重宇宙的可能性。',
+      imageUrl: '/kepu/quantum.jpg',
+      linkUrl: 'https://www.youtube.com/watch?v=q3MWRvLndzs',
+    },
+    // 新增更多科普内容
+    {
+      id: 'solar-storm-1',
+      type: 'article',
+      title: '太阳风暴：地球面临的宇宙威胁',
+      summary: '太阳风暴可能导致全球通信中断、电网瘫痪和卫星损坏。了解这些壮观的太阳活动如何形成，以及科学家如何预测和应对它们。',
+      imageUrl: '/kepu/solar-storm.jpg',
+      linkUrl: 'https://www.nasa.gov/mission/sdo/',
+    },
+    {
+      id: 'neutron-stars-1',
+      type: 'article',
+      title: '中子星：宇宙中最极端的天体',
+      summary: '中子星是恒星死亡后形成的超致密天体，一茶匙物质重达数十亿吨。探索这些奇特天体的形成过程、物理特性和它们在宇宙中的角色。',
+      imageUrl: '/kepu/neutron-star.jpg',
+      linkUrl: 'https://science.nasa.gov/astrophysics/focus-areas/black-holes-and-neutron-stars/',
+    },
+    {
+      id: 'space-medicine-1',
+      type: 'article',
+      title: '太空医学：失重环境下的人体变化',
+      summary: '长期太空飞行对人体有哪些影响？从骨质流失到视力变化，了解宇航员面临的健康挑战以及科学家如何解决这些问题。',
+      imageUrl: '/kepu/space-medicine.jpg',
+      linkUrl: 'https://www.nasa.gov/hrp/bodyinspace',
+    },
+    {
+      id: 'space-telescopes-1',
+      type: 'video',
+      title: '视频：太空望远镜如何改变天文学',
+      summary: '从哈勃到韦伯，太空望远镜如何突破大气层限制，彻底改变了我们对宇宙的认知。这个视频回顾了太空望远镜的发展历程和重大发现。',
+      imageUrl: '/kepu/space-telescopes.jpg',
+      linkUrl: 'https://www.youtube.com/watch?v=4PGEYRqTwCs',
+    },
+    {
+      id: 'mars-colony-1',
+      type: 'article',
+      title: '火星殖民：人类的多行星未来',
+      summary: '在火星建立永久基地面临哪些挑战？从生命支持系统到辐射防护，探索科学家和工程师如何规划人类在红色星球上的长期生存。',
+      imageUrl: '/kepu/mars-colony.jpg',
+      linkUrl: 'https://www.nasa.gov/mars-exploration-zones',
+    },
+    {
+      id: 'gravitational-waves-1',
+      type: 'article',
+      title: '引力波：聆听宇宙的涟漪',
+      summary: '爱因斯坦预言的时空涟漪终于被探测到，开启了天文学的新时代。了解引力波如何形成、如何被探测，以及它们揭示的宇宙奥秘。',
+      imageUrl: '/kepu/gravitational-waves.jpg',
+      linkUrl: 'https://www.ligo.caltech.edu/page/what-are-gw',
+    },
+    {
+      id: 'cosmic-microwave-1',
+      type: 'article',
+      title: '宇宙微波背景辐射：大爆炸的回声',
+      summary: '宇宙微波背景辐射是宇宙大爆炸留下的"化石"，提供了宇宙早期状态的珍贵信息。探索科学家如何通过研究这种辐射来了解宇宙的起源和演化。',
+      imageUrl: '/kepu/cosmic-microwave.jpg',
+      linkUrl: 'https://science.nasa.gov/astrophysics/focus-areas/what-powered-the-big-bang/',
+    },
+    {
+      id: 'space-mining-1',
+      type: 'article',
+      title: '太空采矿：开发小行星资源',
+      summary: '小行星蕴含丰富的稀有金属和水资源，可能成为未来太空经济的关键。了解太空采矿的技术挑战、经济前景和法律问题。',
+      imageUrl: '/kepu/space-mining.jpg',
+      linkUrl: 'https://www.nasa.gov/solar-system/nasa-selects-studies-for-future-asteroid-reconnaissance-mission/',
+    },
+    {
+      id: 'space-tourism-1',
+      type: 'video',
+      title: '视频：太空旅游的兴起与未来',
+      summary: '随着商业航天公司的崛起，太空旅游正从科幻变为现实。这个视频探讨了太空旅游的现状、未来发展和对航天产业的影响。',
+      imageUrl: '/kepu/space-tourism.jpg',
+      linkUrl: 'https://www.youtube.com/watch?v=k3y7G5Y95Jw',
+    },
+    {
+      id: 'multiverse-theory-1',
+      type: 'article',
+      title: '多重宇宙理论：我们的宇宙只是众多宇宙之一？',
+      summary: '多重宇宙理论提出我们的宇宙可能只是无数平行宇宙中的一个。探索这一前沿理论的科学基础、不同模型和可能的验证方法。',
+      imageUrl: '/kepu/multiverse.jpg',
+      linkUrl: 'https://www.space.com/multiverse-theory-explained',
+    },
+    {
+      id: 'space-radiation-1',
+      type: 'article',
+      title: '太空辐射：深空探索的隐形杀手',
+      summary: '太空辐射是长期太空任务面临的主要危险之一。了解不同类型的太空辐射、它们对人体的影响，以及科学家如何开发防护技术。',
+      imageUrl: '/kepu/space-radiation.jpg',
+      linkUrl: 'https://www.nasa.gov/hrp/radiation',
+    },
+    {
+      id: 'space-food-1',
+      type: 'article',
+      title: '太空食品：宇航员如何在太空中吃饭',
+      summary: '从早期的压缩食品到现代的3D打印食物，太空食品技术不断发展。探索宇航员的饮食挑战、营养需求和未来长期太空任务的食品解决方案。',
+      imageUrl: '/kepu/space-food.jpg',
+      linkUrl: 'https://www.nasa.gov/stem-ed-resources/space-food-and-nutrition.html',
+    },
+    {
+      id: 'space-suits-1',
+      type: 'video',
+      title: '视频：太空服的演变与工作原理',
+      summary: '太空服是宇航员在真空环境中生存的个人飞船。这个视频展示了太空服的历史演变、复杂结构和最新技术进展。',
+      imageUrl: '/kepu/space-suits.jpg',
+      linkUrl: 'https://www.youtube.com/watch?v=fhBKtNDPP54',
+    },
+    {
+      id: 'space-weather-1',
+      type: 'article',
+      title: '太空天气：预测宇宙风暴',
+      summary: '太空天气包括太阳活动和宇宙射线对地球环境的影响。了解科学家如何监测和预测太空天气，以及它对卫星、通信和电网的影响。',
+      imageUrl: '/kepu/space-weather.jpg',
+      linkUrl: 'https://www.swpc.noaa.gov/impacts',
+    },
+    {
+      id: 'rocket-science-1',
+      type: 'article',
+      title: '火箭科学：如何将物体送入太空',
+      summary: '火箭是人类进入太空的唯一途径。探索火箭的基本原理、不同类型的推进系统，以及现代火箭技术面临的挑战和创新。',
+      imageUrl: '/kepu/rocket-science.jpg',
+      linkUrl: 'https://www.nasa.gov/audience/forstudents/5-8/features/nasa-knows/what-is-a-rocket-58.html',
+    },
+    {
+      id: 'space-time-1',
+      type: 'video',
+      title: '视频：时空弯曲与引力的关系',
+      summary: '爱因斯坦的广义相对论描述了质量如何弯曲时空，产生我们感知的引力。这个视频用生动的可视化方式解释这一复杂概念。',
+      imageUrl: '/kepu/space-time.jpg',
+      linkUrl: 'https://www.youtube.com/watch?v=AwhKZ3fd9JA',
+    },
+    {
+      id: 'space-law-1',
+      type: 'article',
+      title: '太空法：谁拥有外太空？',
+      summary: '随着太空活动的商业化，太空法律问题变得日益重要。探索现有的国际太空条约、资源开发权、领土主权和未来太空治理的挑战。',
+      imageUrl: '/kepu/space-law.jpg',
+      linkUrl: 'https://www.unoosa.org/oosa/en/ourwork/spacelaw/index.html',
+    },
+    {
+      id: 'space-robotics-1',
+      type: 'article',
+      title: '太空机器人：人类的太空探索先锋',
+      summary: '从火星车到空间站机械臂，机器人在太空探索中扮演着关键角色。了解太空机器人的设计挑战、自主技术和未来发展方向。',
+      imageUrl: '/kepu/space-robotics.jpg',
+      linkUrl: 'https://www.nasa.gov/robotics',
+    },
+    {
+      id: 'space-propulsion-1',
+      type: 'article',
+      title: '未来推进技术：超越化学火箭',
+      summary: '离子推进、核推进、太阳帆——这些先进推进技术可能彻底改变太空旅行。探索这些技术的工作原理、发展现状和潜在应用。',
+      imageUrl: '/kepu/space-propulsion.jpg',
+      linkUrl: 'https://www.nasa.gov/directorates/spacetech/game_changing_development/projects/NEXT-C',
+    },
+    {
+      id: 'space-habitats-1',
+      type: 'video',
+      title: '视频：未来太空栖息地设计',
+      summary: '长期太空居住需要解决重力、辐射和心理健康等多方面挑战。这个视频展示了科学家和工程师设计的各种太空栖息地概念。',
+      imageUrl: '/kepu/space-habitats.jpg',
+      linkUrl: 'https://www.youtube.com/watch?v=vTNP01Sg-Ss',
+    },
+    {
+      id: 'space-psychology-1',
+      type: 'article',
+      title: '太空心理学：孤立环境中的人类行为',
+      summary: '长期太空任务对宇航员的心理健康提出了独特挑战。了解太空环境中的心理压力、团队动力和科学家如何帮助宇航员保持心理健康。',
+      imageUrl: '/kepu/space-psychology.jpg',
+      linkUrl: 'https://www.nasa.gov/hrp/bodyinspace/psychosocial',
+    },
+    {
+      id: 'space-communication-1',
+      type: 'article',
+      title: '深空通信：如何与遥远的航天器对话',
+      summary: '与数十亿公里外的航天器通信需要克服巨大的技术挑战。探索深空网络的工作原理、光通信技术和未来星际通信的可能性。',
+      imageUrl: '/kepu/space-communication.jpg',
+      linkUrl: 'https://www.nasa.gov/directorates/heo/scan/index.html',
+    },
+    {
+      id: 'space-agriculture-1',
+      type: 'article',
+      title: '太空农业：在其他星球上种植食物',
+      summary: '在太空和其他星球上种植食物是长期太空任务的关键。了解科学家如何解决无重力、辐射和有限资源下的植物生长问题。',
+      imageUrl: '/kepu/space-agriculture.jpg',
+      linkUrl: 'https://www.nasa.gov/content/growing-plants-in-space',
+    }
   ];
+
+  // 在组件中添加状态
+  const [sciencePopContent, setSciencePopContent] = useState([]);
+
+  // 提取科普内容的关键词
+  const extractKeywords = (content) => {
+    const keywords = new Set();
+    
+    // 从ID中提取关键词
+    content.id.split('-').forEach(word => {
+      if (word.length > 2) keywords.add(word.toLowerCase());
+    });
+    
+    // 从标题中提取关键词
+    content.title.toLowerCase().split(/\s+/).forEach(word => {
+      // 过滤掉常见的停用词
+      const stopWords = ['的', '在', '和', '与', '如何', '是', '：', '视频'];
+      if (word.length > 1 && !stopWords.includes(word)) {
+        keywords.add(word);
+      }
+    });
+    
+    // 从摘要中提取关键词
+    const importantWords = [
+      '太空', '宇宙', '火星', '月球', '黑洞', '望远镜', '卫星', 
+      '行星', '恒星', '引力', '辐射', '航天', '宇航员', '太阳', 
+      '星系', '轨道', '探测', '科学', '技术', '物理', '天文'
+    ];
+    
+    importantWords.forEach(word => {
+      if (content.summary.includes(word)) {
+        keywords.add(word);
+      }
+    });
+    
+    return Array.from(keywords);
+  };
+
+  // 计算图片与科普内容的相关性分数
+  const calculateRelevanceScore = (imagePath, keywords) => {
+    let score = 0;
+    const imageNameLower = imagePath.toLowerCase();
+    
+    keywords.forEach(keyword => {
+      if (imageNameLower.includes(keyword)) {
+        score += 10; // 直接匹配加10分
+      } else {
+        // 部分匹配检查
+        const partialMatches = keyword.length > 4 ? 
+          imageNameLower.includes(keyword.substring(0, 4)) : false;
+        
+        if (partialMatches) {
+          score += 3; // 部分匹配加3分
+        }
+      }
+    });
+    
+    return score;
+  };
+
+  // 添加一个状态来存储匹配调试信息
+  const [matchingDebugInfo, setMatchingDebugInfo] = useState([]);
+  const [showMatchingDebug, setShowMatchingDebug] = useState(false);
+
+  // 修改findMostRelevantImage函数，收集调试信息
+  const findMostRelevantImage = (content) => {
+    const keywords = extractKeywords(content);
+    
+    // 计算每张图片的相关性分数
+    const scoredImages = availableImages.map(imagePath => ({
+      path: imagePath,
+      score: calculateRelevanceScore(imagePath, keywords)
+    }));
+    
+    // 按分数排序
+    scoredImages.sort((a, b) => b.score - a.score);
+    
+    // 收集调试信息
+    const debugInfo = {
+      contentId: content.id,
+      contentTitle: content.title,
+      keywords: keywords,
+      topMatches: scoredImages.slice(0, 5).map(img => ({
+        path: img.path,
+        score: img.score
+      })),
+      selectedImage: scoredImages[0].score > 0 ? scoredImages[0].path : availableImages[Math.floor(Math.random() * availableImages.length)]
+    };
+    
+    // 返回分数最高的图片，如果所有图片分数为0，则随机选择一张
+    if (scoredImages[0].score > 0) {
+      return {
+        path: scoredImages[0].path,
+        debugInfo
+      };
+    } else {
+      const randomIndex = Math.floor(Math.random() * availableImages.length);
+      return {
+        path: availableImages[randomIndex],
+        debugInfo
+      };
+    }
+  };
+
+  // 修改useEffect，收集所有调试信息
+  useEffect(() => {
+    // 为每个科普内容分配相关图片，避免同一页面重复
+    const assignImagesWithoutDuplication = () => {
+      // 创建一个已分配图片的集合
+      const assignedImages = new Set();
+      // 创建一个调试信息列表
+      const debugInfoList = [];
+      // 按页面分组处理科普内容
+      const totalPages = Math.ceil(originalSciencePopContent.length / scienceItemsPerPage);
+      
+      // 创建结果数组
+      const result = [...originalSciencePopContent];
+      
+      // 为每一页分配图片
+      for (let page = 0; page < totalPages; page++) {
+        // 获取当前页的内容
+        const startIndex = page * scienceItemsPerPage;
+        const endIndex = Math.min(startIndex + scienceItemsPerPage, originalSciencePopContent.length);
+        const currentPageItems = result.slice(startIndex, endIndex);
+        
+        // 当前页已使用的图片
+        const currentPageImages = new Set();
+        
+        // 为当前页的每个内容项分配图片
+        for (let i = 0; i < currentPageItems.length; i++) {
+          const item = currentPageItems[i];
+          const itemIndex = startIndex + i;
+          
+          // 获取内容的关键词
+          const keywords = extractKeywords(item);
+          
+          // 计算每张图片的相关性分数
+          const scoredImages = availableImages.map(imagePath => ({
+            path: imagePath,
+            score: calculateRelevanceScore(imagePath, keywords)
+          }));
+          
+          // 按分数排序
+          scoredImages.sort((a, b) => b.score - a.score);
+          
+          // 找到一个尚未在当前页使用的最高分图片
+          let selectedImage = null;
+          for (const img of scoredImages) {
+            if (!currentPageImages.has(img.path) && img.score > 0) {
+              selectedImage = img;
+              break;
+            }
+          }
+          
+          // 如果没有找到合适的图片，使用随机未使用的图片
+          if (!selectedImage) {
+            const unusedImages = availableImages.filter(img => !currentPageImages.has(img));
+            if (unusedImages.length > 0) {
+              const randomIndex = Math.floor(Math.random() * unusedImages.length);
+              selectedImage = { 
+                path: unusedImages[randomIndex], 
+                score: 0 
+              };
+            } else {
+              // 如果所有图片都已使用，选择一个随机图片
+              const randomIndex = Math.floor(Math.random() * availableImages.length);
+              selectedImage = { 
+                path: availableImages[randomIndex], 
+                score: 0 
+              };
+            }
+          }
+          
+          // 标记图片为已使用
+          currentPageImages.add(selectedImage.path);
+          assignedImages.add(selectedImage.path);
+          
+          // 收集调试信息
+          const debugInfo = {
+            contentId: item.id,
+            contentTitle: item.title,
+            keywords: keywords,
+            topMatches: scoredImages.slice(0, 5).map(img => ({
+              path: img.path,
+              score: img.score
+            })),
+            selectedImage: selectedImage.path,
+            page: page + 1
+          };
+          
+          debugInfoList.push(debugInfo);
+          
+          // 更新结果数组
+          result[itemIndex] = {
+            ...item,
+            imageUrl: selectedImage.path
+          };
+        }
+      }
+      
+      return { contentWithImages: result, debugInfoList };
+    };
+    
+    // 执行分配
+    const { contentWithImages, debugInfoList } = assignImagesWithoutDuplication();
+    
+    // 更新状态
+    setSciencePopContent(contentWithImages);
+    setMatchingDebugInfo(debugInfoList);
+  }, []);
+
+  // 在组件中修改useEffect
+  useEffect(() => {
+    // 为每个科普内容分配相关图片
+    const contentWithRelevantImages = originalSciencePopContent.map(item => {
+      return {
+        ...item,
+        imageUrl: findMostRelevantImage(item).path
+      };
+    });
+    
+    setSciencePopContent(contentWithRelevantImages);
+  }, []);
+
+  // 修改获取当前页科普内容的函数，使用带有随机图片的内容
+  const getCurrentPageScienceItems = () => {
+    const startIndex = (currentSciencePage - 1) * scienceItemsPerPage;
+    const endIndex = startIndex + scienceItemsPerPage;
+    return sciencePopContent.slice(startIndex, endIndex);
+  };
+  
+  // 计算科普内容的总页数
+  const totalSciencePages = Math.ceil(sciencePopContent.length / scienceItemsPerPage);
+
+  // 处理页码变化
+  const handleSciencePageChange = (pageNumber) => {
+    setCurrentSciencePage(pageNumber);
+    // 滚动到页面顶部
+    window.scrollTo({
+      top: document.querySelector('.science-popularization-container').offsetTop - 100,
+      behavior: 'smooth'
+    });
+  };
+
+  // 在组件内添加图片错误处理函数
+  const handleImageError = (e) => {
+    e.target.src = '/kepu/fallback-space.jpg'; // 备用图片路径
+  };
+
+  // 在组件中添加预加载效果
+  useEffect(() => {
+    // 预加载当前页和下一页的图片
+    const preloadImages = () => {
+      const currentItems = getCurrentPageScienceItems();
+      const nextPageItems = [];
+      
+      if (currentSciencePage < totalSciencePages) {
+        const startIndex = currentSciencePage * scienceItemsPerPage;
+        const endIndex = Math.min(startIndex + scienceItemsPerPage, sciencePopContent.length);
+        nextPageItems.push(...sciencePopContent.slice(startIndex, endIndex));
+      }
+      
+      // 合并当前页和下一页的项目
+      const itemsToPreload = [...currentItems, ...nextPageItems];
+      
+      // 预加载图片
+      itemsToPreload.forEach(item => {
+        const img = new Image();
+        img.src = item.imageUrl;
+      });
+    };
+    
+    preloadImages();
+  }, [currentSciencePage]);
+
+  // 修改调试面板组件
+  const MatchingDebugPanel = () => {
+    if (!showMatchingDebug) return null;
+    
+    // 按页面分组调试信息
+    const groupedByPage = {};
+    matchingDebugInfo.forEach(info => {
+      if (!groupedByPage[info.page]) {
+        groupedByPage[info.page] = [];
+      }
+      groupedByPage[info.page].push(info);
+    });
+    
+    return (
+      <div className="matching-debug-panel">
+        <h2>图片匹配调试信息</h2>
+        <button onClick={() => setShowMatchingDebug(false)}>关闭</button>
+        
+        {Object.keys(groupedByPage).map(page => (
+          <div key={page} className="debug-page">
+            <h3 className="page-title">第 {page} 页</h3>
+            <div className="page-items">
+              {groupedByPage[page].map((info, index) => (
+                <div key={index} className="debug-item">
+                  <h4>{info.contentTitle} (ID: {info.contentId})</h4>
+                  <p><strong>提取的关键词:</strong> {info.keywords.join(', ')}</p>
+                  <p><strong>选择的图片:</strong> {info.selectedImage}</p>
+                  <div className="top-matches">
+                    <h5>最佳匹配 (前5名):</h5>
+                    <ul>
+                      {info.topMatches.map((match, idx) => (
+                        <li key={idx}>
+                          {match.path} - 分数: {match.score}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <hr />
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className="gallery-container">
@@ -1061,15 +1696,20 @@ const Gallery = () => {
               太空科普知识
             </h2>
             <div className="science-pop-list"> 
-              {sciencePopContent.map(item => (
+              {getCurrentPageScienceItems().map(item => (
                 <div key={item.id} className="science-item-card-horizontal"> 
                   <div className="science-item-image-container-horizontal">
-                     <img src={item.imageUrl} alt={item.title} className="science-item-image-horizontal" />
-                     {item.type === 'video' && 
-                        <a href={item.linkUrl} target="_blank" rel="noopener noreferrer" className="video-overlay-link">
-                          <div className="video-overlay"><span className="play-icon">▶</span></div>
-                        </a>
-                     }
+                    <img 
+                      src={item.imageUrl} 
+                      alt={item.title} 
+                      className="science-item-image-horizontal" 
+                      onError={handleImageError} // 添加错误处理
+                    />
+                    {item.type === 'video' && 
+                      <a href={item.linkUrl} target="_blank" rel="noopener noreferrer" className="video-overlay-link">
+                        <div className="video-overlay"><span className="play-icon">▶</span></div>
+                      </a>
+                    }
                   </div>
                   <div className="science-item-content-horizontal">
                     <h3 className="science-item-title">{item.title}</h3>
@@ -1088,6 +1728,39 @@ const Gallery = () => {
                 </div>
               ))}
             </div>
+            
+            {/* 添加分页控件 */}
+            {totalSciencePages > 1 && (
+              <div className="pagination-container">
+                <button 
+                  className="pagination-button"
+                  onClick={() => handleSciencePageChange(currentSciencePage - 1)}
+                  disabled={currentSciencePage === 1}
+                >
+                  上一页
+                </button>
+                
+                <div className="pagination-numbers">
+                  {Array.from({ length: totalSciencePages }, (_, i) => i + 1).map(pageNum => (
+                    <button
+                      key={pageNum}
+                      className={`pagination-number ${pageNum === currentSciencePage ? 'active' : ''}`}
+                      onClick={() => handleSciencePageChange(pageNum)}
+                    >
+                      {pageNum}
+                    </button>
+                  ))}
+                </div>
+                
+                <button 
+                  className="pagination-button"
+                  onClick={() => handleSciencePageChange(currentSciencePage + 1)}
+                  disabled={currentSciencePage === totalSciencePages}
+                >
+                  下一页
+                </button>
+              </div>
+            )}
           </div>
         )}
         
@@ -1143,7 +1816,7 @@ const Gallery = () => {
                   </a>
                 </div>
 
-                <h3 style={{color: '#90cdf4', borderBottom: '1px solid rgba(97, 218, 251, 0.1)', paddingBottom: '10px', margin: '35px 0 20px 0'}}>奖项设置</h3>
+                <h3 style={{color: '#90cdf4', borderBottom: '1px solid rgba(97, 218, 251, 0.1)', paddingBottom: '10px', marginBottom: '20px'}}>奖项设置</h3>
                 <p style={{ lineHeight: 1.8, fontSize: '1.1rem', marginBottom: '15px' }}>
                   各赛道将评选出一、二、三等奖及优秀奖若干名，颁发丰厚奖品及荣誉证书。
                 </p>
